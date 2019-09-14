@@ -1,0 +1,27 @@
+{
+  "name": "final",
+  "version": "1.0.0",
+  "description": "challengeaccepted",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roiech/challengeaccepted.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roiech/challengeaccepted/issues"
+  },
+  "homepage": "https://github.com/roiech/challengeaccepted#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.17.1",
+    "mongodb": "^3.2.7",
+    "mongoose": "^5.6.7"
+  },
+  "devDependencies": {}
+}

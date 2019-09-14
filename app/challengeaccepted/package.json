@@ -1,0 +1,43 @@
+{
+  "name": "challengeaccepted",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-native-community/async-storage": "^1.6.1",
+    "bundle": "^2.1.0",
+    "react": "16.8.3",
+    "react-native": "0.59.2",
+    "react-native-autocomplete-input": "^4.1.0",
+    "react-native-elements": "^1.1.0",
+    "react-native-gesture-handler": "^1.1.0",
+    "react-native-get-location": "^1.2.0",
+    "react-native-image-picker": "^1.0.2",
+    "react-native-router-flux": "^3.35.0",
+    "react-native-s3-upload": "0.0.12",
+    "react-native-stopwatch-timer": "0.0.20",
+    "react-native-vector-icons": "^6.6.0",
+    "react-native-video": "^5.0.0",
+    "react-navigation": "^3.11.1",
+    "react-timer-mixin": "^0.13.4",
+    "sync-storage": "^0.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.4.0",
+    "@babel/runtime": "7.4.2",
+    "@react-native-community/eslint-config": "0.0.3",
+    "babel-jest": "24.5.0",
+    "eslint": "5.15.3",
+    "jest": "24.5.0",
+    "jetifier": "^1.6.3",
+    "metro-react-native-babel-preset": "0.53.1",
+    "react-test-renderer": "16.8.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
