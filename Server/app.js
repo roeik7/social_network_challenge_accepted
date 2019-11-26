@@ -13,7 +13,6 @@ const feed_router=require('./Routers/feed/feed_router')
 require('./DB/mongoose')
 
 
-
 //automatic parse incoming json to object
 app.use(express.json())
 
