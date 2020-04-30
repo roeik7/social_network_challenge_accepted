@@ -11,5 +11,6 @@ and to chellenge their friends and monitor their performence.
 
 + **Server - NodeJS**
 
-/Server/DB - conatains all the collections related to the app <br/>
-/Server/Routers - API client -  contains logic of the server. Divided into a number of modules representing requests on various topics from the client (such as posts, starting a challenge, adding a challenge, challenging one of the members, etc.)
+/Server/DB - conatains all the database modedls related to the app <br/>
+/Server/Routers - API for client -  contains logic of the server.<br/> 
+Divided into a number of modules representing requests on various topics from the client (such as posts, starting a challenge, adding a challenge, challenging one of the members, etc.)
