@@ -9,7 +9,7 @@ and to chellenge their friends and monitor their performence.
 /app/challengeaccepted/src/action - send data to the server
 /app/challengeaccepted/src/style - global style (button etc)
 
-## **Server - NodeJS**
+## **Server - Node.js**
 
 /Server/DB - conatains all the database modedls related to the app <br/>
 /Server/Routers - API for client -  contains logic of the server.<br/> 
