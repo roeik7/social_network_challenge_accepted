@@ -3,7 +3,7 @@ Challenge Accepted is a sport social netwrok which allow to the user create chal
 and to chellenge their friends and monitor their performence.
 
 
-+ **APP - React Native**
++ **Client - React Native**
 
 /app/challengeaccepted/src/compnenet - the compnenet
 /app/challengeaccepted/src/action - send data to the server
