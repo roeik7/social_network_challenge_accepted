@@ -13,7 +13,7 @@ const post_router = require('../post/posts_router')
 //description: when user want to start new challenge
 //output: challenges types
 router.get('/choose_challenge_to_complete', (req, res) => {
-    console.log('in choose challenge')
+    
     //send to client json object of json's array
     res.json({
         "challenges_to_complete": [
@@ -26,17 +26,14 @@ router.get('/choose_challenge_to_complete', (req, res) => {
 
 
 
-
-
 //description: invoked when challenge ending and check if the user success to achieve the destiny. handle the post creation, update scores, check for new records.
 //input: user_name, challenge_id (if future challenge), challenge_for(user challenge another user) exist(bool), challenge_type(run, swim..), challenge_criterion(time, speed), actual time, actual distance, dest_time, dest_speed 
 router.post('/end_of_challenge', async (req, res) => {
     try {
-        var post_id = null
-        var challenge_id = req.body.challenge_id
+        let post_id = null
+        let challenge_id = req.body.challenge_id
         console.log('insert end of challenge details');
         const challenge_result = await challenge_is_complete_and_update_score(req.body)
-        console.log('completed in main func: ' + challenge_result.completed + '. the score: ' + challenge_result.score)
 
         //if not from saved challenge then insert new challenge details to db (challenge goals, general_details) 
         if (!req.body.exist) {
@@ -96,7 +93,7 @@ router.post('/end_of_challenge', async (req, res) => {
 
 //description: check if user take specific challeneg 
 const user_take_challenge = async (user_name, post_id) => {
-    var is_take = true
+    let is_take = true
     const user = await model_challenge_general_details.findOne({ user_name: user_name, post_id: post_id })
 
     if (user == undefined) {
@@ -122,9 +119,8 @@ const user_take_challenge = async (user_name, post_id) => {
 //input: challenge deatils (user name, challenge type)
 const create_and_add_general_details_doc = async (challenge_details) => {
     try {
-        var icon_to_update = ""
-        var challenge_type = challenge_details.challenge_type.toUpperCase()
-        //const is_video_challenge = challenge_details.video_url != null ? true : false
+        let icon_to_update = ""
+        const challenge_type = challenge_details.challenge_type.toUpperCase()
 
         switch (challenge_type) {
             case 'RUN':
@@ -137,7 +133,6 @@ const create_and_add_general_details_doc = async (challenge_details) => {
                 icon_to_update = "bicycle"
                 break;
         }
-
 
 
         const challenge_to_add = new model_challenge_general_details({
@@ -175,7 +170,6 @@ const create_and_add_chalenge_goals_doc = async (challenge_details, challenge_id
             completed: completed
         })
 
-        console.log(challenge_goals)
         await challenge_goals.save().then(() => {
             return 'success to add challenge goals'
         }).catch((e) => {
@@ -189,7 +183,7 @@ const create_and_add_chalenge_goals_doc = async (challenge_details, challenge_id
 
 
 const add_new_challenge = async (challenge_details, completed) => {
-    var challenge_id = await create_and_add_general_details_doc(challenge_details)
+    const challenge_id = await create_and_add_general_details_doc(challenge_details)
     console.log('challenge_id =' + challenge_id)
     await create_and_add_chalenge_goals_doc(challenge_details, challenge_id, completed)
     return challenge_id
@@ -199,19 +193,16 @@ const add_new_challenge = async (challenge_details, completed) => {
 //description: called when challenge is completed. this function update his score by his performance
 //input: challenge performance, user name
 const challenge_is_complete_and_update_score = async (challenge_details) => {
-    var completed = false
-    var actual = 0
-    var destination = 0
+    let completed = false
+    let actual = 0
+    let destination = 0
     const is_video = challenge_details.video_url != null ? true : false
-    var challenge_type = ""
-    var average_speed = null
-    
-    console.log('challenge_details before check if complete ' + JSON.stringify(challenge_details))
-    console.log('is video ' + is_video)
+    let challenge_type = ""
+    let average_speed = null
     
     //if its not video the score calculated different
     if (!is_video) {
-        console.log('not video challenge')
+		
         switch (challenge_details.challenge_criterion) {
             case 'time':
                 completed = challenge_details.actual_time <= challenge_details.destination_time
