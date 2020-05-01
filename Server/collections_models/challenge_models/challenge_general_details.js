@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
 
-
 //_id refference to same challenge at challenge_goals and saved_challenge 
 //define the model structure
 const challenge_general_details = mongoose.model('challenge_general_details', {

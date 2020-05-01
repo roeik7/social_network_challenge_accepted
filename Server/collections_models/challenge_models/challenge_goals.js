@@ -7,7 +7,6 @@ const mongoose = require('mongoose')
 const challenge_goals = mongoose.model('challenge_goals', {
    challenge_id:{
         type: mongoose.Schema.Types.ObjectId, ref:'challenge_general_details',
-        //required:true
    },
    destination_time:{
        type: Number,
