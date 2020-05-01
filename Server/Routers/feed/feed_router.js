@@ -28,11 +28,11 @@ router.get('/feed/posts', async (req, res) => {
 
         //traverse all posts related to the user and add some info like if the user liked this post, if the user take the challenge
         for (var post of posts) {
-            var temp_post = post.toObject()
-            var user_like_post = false
-            var post_id = post._id
+            let temp_post = post.toObject()
+            let user_like_post = false
+            let post_id = post._id
             temp_post['video_url'] = temp_post.video_url
-            var user_take_challenge = await general_details_router.user_take_challenge(req.query.user_name, post_id)
+            let user_take_challenge = await general_details_router.user_take_challenge(req.query.user_name, post_id)
             console.log('user take challenge: ' + user_take_challenge)
             temp_post['user_take_challenge'] = user_take_challenge
             const user = await model_user_general_details.findOne({ user_name: post.created })

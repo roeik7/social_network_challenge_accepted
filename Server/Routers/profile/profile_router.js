@@ -1,4 +1,3 @@
-//inport relevant libraries and collections
 const express = require('express')
 const model_user_posts = require('../../collections_models/posts_models/post_model')
 const router = new express.Router()
@@ -9,19 +8,18 @@ const user_achivement_model = require('../../collections_models/user_models/user
 const challenge_general_details_router = require('../challenges/challenge_general_details_router')
 
 
+
 //description: list user information (following after, followed by, score)
 //input: profile_watched, who_watching
 router.get('/info/user', async (req, res) => {
-    var returned_info = {}
-    var watching_follow_user = false;
+    let returned_info = {}
+    let watching_follow_user = false;
     await following_model.count({ user_name: req.query.profile_watched }).then(async (num_of_following) => {
-        //console.log(num_of_following)
+        
         returned_info['following'] = num_of_following
         await following_model.count({ follow: req.query.profile_watched }).then(async (num_of_followed_by) => {
             returned_info['followed_by'] = num_of_followed_by
             await user_achivement_model.findOne({ user_name: req.query.profile_watched }).select('total_score').then(async (score) => {
-                //console.log(score)
-                //const temp_score=score.toObject()
                 returned_info['total_score'] = score.total_score
 
                 await following_model.findOne({ user_name: req.query.who_watching, follow: req.query.profile_watched }).then((follow) => {
@@ -50,10 +48,10 @@ router.get('/info/user', async (req, res) => {
 router.post('/unfollow', async (req, res) => {
     try {
         const following_deleted = await following_model.findOneAndDelete({ user_name: req.body.user_name, follow: req.body.follow })
-        res.send('success to remove following : ' + following_deleted)
+        res.send({message:'success to remove following : ' + following_deleted})
     }
     catch (e) {
-        res.send('error to delete following: ' + e)
+        res.send({message:'error to delete following: ' + e})
     }
 
 })
@@ -96,7 +94,6 @@ router.get('/my_profile/posts', async (req, res) => {
     }
 })
 
-
 //description: when user watch other profile
 //input: user_name_watch, user_name_profile
 router.get('/other_profile/posts', async (req, res) => {
@@ -110,7 +107,6 @@ router.get('/other_profile/posts', async (req, res) => {
 })
 
 
-
 //description: list all posts that specific user created
 //input: watching user name, profile user name
 const all_post_for_specific_user = async (watch, profile_user_name) => {
@@ -119,15 +115,14 @@ const all_post_for_specific_user = async (watch, profile_user_name) => {
         var returned_posts = []
 
         for (var post of posts) {
-            var temp_post = post.toObject()
-            var user_like_post = false
-            var post_id = post._id
-            //temp_post['video_url']=post.video_url
+            let temp_post = post.toObject()
+            let user_like_post = false
+            let post_id = post._id
             const user = await model_user_general_details.findOne({ user_name: post.created })
             temp_post['image_url'] = user.image_url;
 
             //check if the user take from him the challenge
-            var user_take_challenge = await challenge_general_details_router.user_take_challenge(watch, post_id)
+            let user_take_challenge = await challenge_general_details_router.user_take_challenge(watch, post_id)
             console.log('user take challenge: ' + user_take_challenge)
             temp_post['user_take_challenge'] = user_take_challenge
             const like = await like_model.findOne({
@@ -140,7 +135,6 @@ const all_post_for_specific_user = async (watch, profile_user_name) => {
             }
 
             temp_post['user_like_post'] = user_like_post
-            //console.log(temp_post)
 
             returned_posts.push(temp_post)
         }

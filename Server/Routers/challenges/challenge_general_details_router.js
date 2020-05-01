@@ -25,7 +25,6 @@ router.get('/choose_challenge_to_complete', (req, res) => {
 })
 
 
-
 //description: invoked when challenge ending and check if the user success to achieve the destiny. handle the post creation, update scores, check for new records.
 //input: user_name, challenge_id (if future challenge), challenge_for(user challenge another user) exist(bool), challenge_type(run, swim..), challenge_criterion(time, speed), actual time, actual distance, dest_time, dest_speed 
 router.post('/end_of_challenge', async (req, res) => {

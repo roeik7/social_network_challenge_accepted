@@ -5,17 +5,9 @@ const router = new express.Router()
 
 
 
-//model:
-//user_name
-//total_score
-//failed_challenge
-//success_challenge
-//average_score_per_challenge
-
 //description: invoked when user finished and completed the challenge. update his score and check records by the challenge performance.
 //input: user name, completed(booalen), actual performance, destination
 router.post('/update_score', (req, res) => {
-    console.log(req.body)
     update_achivements(req.body.user_name, req.body.completed, req.body.actual, req.body.destination).then(() => {
         res.send('success to update usr score.')
     }).catch((e) => {
@@ -27,7 +19,6 @@ router.post('/update_score', (req, res) => {
 //input: user name
 const add_new_user_to_achivements_table = async (user_name) => {
     try {
-        console.log('add new user to achivements table')
         const user = new model_user_achivements({
             user_name: user_name,
             total_score: 0,
@@ -36,7 +27,6 @@ const add_new_user_to_achivements_table = async (user_name) => {
             average_score_per_challenge: 0
         })
         await user.save()
-        console.log('user save to achivemtnts table')
         await initialize_records(user_name)
     }
     catch (e) {
@@ -49,7 +39,6 @@ const add_new_user_to_achivements_table = async (user_name) => {
 //unput: user name 
 const initialize_records = async (user_name) => {
     try {
-        console.log('initialize records')
         const bicycle_records = await new model_user_records({
             user_name: user_name,
             sport_type: 'bicycle'
@@ -60,16 +49,13 @@ const initialize_records = async (user_name) => {
             sport_type: 'run'
         })
 
-        console.log('before saving bicycle')
         await bicycle_records.save()
-        console.log('save to bicycle recors')
         await run_records.save()
-        console.log('save to run recors')
     }
+	
     catch (e) {
         throw new Error('error to initialize records: ' + e)
     }
-
 }
 
 //description: when user succeded his challenge this function calculate the score to add. 
@@ -79,8 +65,6 @@ const update_achivements = async (user_name, completed, actual, destination) => 
     try {
         const success = completed ? 1 : 0
         const score_to_add = success * (5 + 2 * Math.abs(actual - destination)) //5 to succes challenge + 2 * (improvement from the destination)
-        console.log('in update score user name: ' + user_name)
-        console.log('score_to_add: '+score_to_add)
         const user = await model_user_achivements.findOne({ user_name: user_name })
         const new_score = (user.total_score + score_to_add).toFixed(0)
         const failed = user.failed_challenge + (1 - success)
@@ -97,9 +81,7 @@ const update_achivements = async (user_name, completed, actual, destination) => 
             }
         })
 
-        console.log('success to update user score. user: ' + user)
         return score_to_add
-
     }
 
     catch (e) {
@@ -118,7 +100,6 @@ router.post('/records', async (req, res) => {
 //description: add score for specific user
 //input: user name, score to add
 const add_score = async (user_name, score_to_add)=>{
-    console.log('user_name in add score: '+user_name)
     const user_achivements = await model_user_achivements.findOneAndUpdate({user_name:user_name}, { $inc: { total_score: score_to_add }})
     return console.log(user_achivements)
 }
@@ -128,20 +109,13 @@ const add_score = async (user_name, score_to_add)=>{
 //input: challenge performance
 const update_records = async (challenge_details) => {
     try {
-        console.log('in update records')
         const sport_type = challenge_details.sport_type.toLowerCase()
         const user_records = await model_user_records.findOne({ user_name: challenge_details.user_name, sport_type:sport_type })
-        console.log('user_records: '+user_records)
         const best_time=user_records.best_time==null || challenge_details.time>user_records.best_time?challenge_details.time.toFixed(0):user_records.best_time
-        console.log('after best time')
         const best_distance=user_records.best_distance==null || challenge_details.distance>user_records.best_distance?challenge_details.distance.toFixed(0):user_records.best_distance
-        console.log('efter best distance')
         const best_average_speed = challenge_details.average_speed!=null &&(user_records.best_average_speed==null || challenge_details.average_speed>user_records.best_average_speed)? 
         challenge_details.average_speed.toFixed(0) : user_records.best_average_speed
-        console.log('after speed')
         const best_score_on_challenge = user_records.best_score_on_challenge==null || challenge_details.score>user_records.best_score_on_challenge?challenge_details.score.toFixed(0):user_records.best_score_on_challenge
-        console.log('after score')
-        console.log('best_time: '+best_time+' best distance: '+best_distance+'best average speed: '+best_average_speed+' best score: '+best_score_on_challenge)
         
         await model_user_records.findOneAndUpdate({ "user_name": challenge_details.user_name,sport_type:sport_type }, {
             "$set": {
@@ -156,6 +130,7 @@ const update_records = async (challenge_details) => {
 
         return all_sport_types
     }
+	
     catch (e) {
         throw new Error('error in update records: ' + e)
     }

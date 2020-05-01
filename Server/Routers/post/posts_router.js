@@ -42,7 +42,7 @@ const decrement_challenge_from_post = async (post_id) => {
 //input: Information on user performance in the challenge he made 
 const create_success_challenge_message = async (challenge_details, challenge_result) => {
     try {
-        var message = ""
+        let message = ""
         const new_line = '\r\n'
         
         //check if its video challenge
@@ -107,7 +107,6 @@ router.post('/take_challenge', async (req, res) => {
     await model_user_posts.findById({ _id: req.body.post_id }).select('created challenge_id').then(async (post_details) => {
         achivemnts_router.add_score(post_details.created, 5)
         challenge_details['user_name'] = req.body.user_name
-        console.log('challenge_id: ' + post_details._id)
 
         //find the challenge details and copt them to the user who joined the challenge
         await model_challenge_general_details.findById({ _id: post_details.challenge_id }).then(async (challenge) => {
@@ -119,17 +118,13 @@ router.post('/take_challenge', async (req, res) => {
             challenge_details['challenge_criterion'] = temp_challenge.challenge_criterion
             challenge_details['icon'] = temp_challenge.icon
             challenge_details['post_id'] = req.body.post_id
-            console.log('returned value: ' + challenge_details)
-
-
-            console.log('challenge id before call challenge goals ' + post_details.challenge_id)
+            
             await model_challenge_goals.findById({ _id: post_details.challenge_id }).then(async (challenge_goals) => {
                 var temp_challenge_goals = challenge_goals.toObject()
                 challenge_details['destination_time'] = temp_challenge_goals.destination_time
                 challenge_details['destination_speed'] = temp_challenge_goals.destination_speed
                 challenge_details['destination_distance'] = temp_challenge_goals.destination_distance
                 challenge_details['video_url'] = temp_challenge_goals.video_url
-                //console.log('challenge details: '+challenge_details)
             })
         })
 
@@ -163,13 +158,12 @@ router.post('/unlike', async (req, res) => {
 //input: post_id
 router.get('/comments/id', async (req, res) => {
     try {
-        var returned_comments = []
+        let returned_comments = []
         const comments = await model_comment.find({ post_id: req.query.post_id }).sort({ created_date: 'desc' })
         for (var comment of comments) {
             var temp_comment = comment.toObject()
             var image_object = await model_user_general_details.findOne({ user_name: temp_comment.created })
             temp_comment['image_url'] = image_object.image_url
-            //console.log(temp_comment)
             returned_comments.push(temp_comment)
         }
 
@@ -186,7 +180,6 @@ router.get('/comments/id', async (req, res) => {
 //input: post_id, created, text, created_date
 
 router.post('/add_comment', async (req, res) => {
-
     try {
         const comment = new model_comment({
             post_id: req.body.post_id,

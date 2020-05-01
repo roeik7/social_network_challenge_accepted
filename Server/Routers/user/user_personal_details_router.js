@@ -9,8 +9,8 @@ const following_model = require('../../collections_models/user_models/following'
 //input: user_name, password
 router.get('/login', async (req, res) => {
     try {
-        var message = "ivalid user name/password"
-        var user = await model_user_personal_details.findOne({
+        let message = "ivalid user name/password"
+        let user = await model_user_personal_details.findOne({
             user_name: req.query.user_name,
             password: req.query.password
         })
@@ -31,12 +31,11 @@ router.get('/login', async (req, res) => {
 //if unique - add him to db
 //input user_name, password, image_url
 router.post('/sign_up', async (req, res) => {
-    var message
+    let message
     const user = new model_user_personal_details(req.body)
 
     await model_user_personal_details.findOne({ user_name: user.user_name }, async (error, user) => {
         if (error) {
-            console.log('error in user name unique')
             message = error.body
         }
 
