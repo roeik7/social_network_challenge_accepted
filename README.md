@@ -10,7 +10,7 @@ and to chellenge their friends and monitor their performence.
 /app/challengeaccepted/src/style - global style (button etc)
 
 ## **Server - Node.js**
-
-/Server/DB - conatains all the database modedls related to the app <br/>
-/Server/Routers - API for client -  contains logic of the server.<br/> 
+/Server/Routers - API for client -  contains logic of the server.<br/>
 Divided into a number of modules representing requests on various topics from the client (such as posts, starting a challenge, adding a challenge, challenging one of the members, etc.)
+/Server/db_libraries - conatains all the database modedls related to the app <br/>
+/Server/collections_model - contain all the database models.<br/>

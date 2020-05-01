@@ -10,7 +10,7 @@ const user_achivements_router=require('./Routers/user/user_achivements_router')
 const user_posts_router=require('./Routers/post/posts_router')
 const profile_router=require('./Routers/profile/profile_router')
 const feed_router=require('./Routers/feed/feed_router')
-require('./DB/mongoose')
+require('./db_libraries/mongoose')
 
 
 //automatic parse incoming json to object
